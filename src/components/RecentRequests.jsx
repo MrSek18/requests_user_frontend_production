@@ -11,11 +11,14 @@ export default function RequerimientosRecientes({ token }) {
 
     const fetchRequerimientos = async () => {
       try {
-        const res = await axios.get("/requests/recent", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}/requests/recent`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setRequerimientos(res.data);
       } catch (err) {
         console.error("Error al cargar requerimientos:", err);
@@ -84,7 +87,6 @@ export default function RequerimientosRecientes({ token }) {
                       <path d="M9 18l6-6-6-6" />
                     </svg>
                   </button>
-
                 </div>
               </li>
             );
