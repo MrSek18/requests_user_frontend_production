@@ -7,7 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 
 // Configuración global de Axios
 axios.defaults.baseURL =
-  "https://requests-user-backend-production.onrender.com";
+  "https://requests-user-backend-production.onrender.com/api";
 axios.defaults.headers.common["Accept"] = "application/json";
 
 axios.interceptors.response.use(
