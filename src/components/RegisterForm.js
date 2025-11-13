@@ -16,7 +16,6 @@ const RegisterForm = () => {
   const [success, setSuccess] = useState("");
   const [globalError, setGlobalError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [recaptchaReady, setRecaptchaReady] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
   const navigate = useNavigate();
