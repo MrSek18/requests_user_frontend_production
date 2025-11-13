@@ -49,9 +49,7 @@ export default function Configuracion({ user, onLogout }) {
     }
 
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    const response = await api.put(`/api/user/${user.id}`, {
-      [field]: formData[field],
-    });
+    
 
     setStatusMessage((prev) => ({
       ...prev,

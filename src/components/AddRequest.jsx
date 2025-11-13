@@ -178,8 +178,8 @@ if (showPreview) {
         <h2 className="text-2xl font-bold text-center mb-4">Orden de Servicio</h2>
 
         <div className="space-y-2 text-sm">
-          <p><strong>Empresa:</strong> {companies.find(c => c.id == form.company_id)?.name}</p>
-          <p><strong>Solicitante:</strong> {representatives.find(r => r.id == form.representative_id)?.name}</p>
+          <p><strong>Empresa:</strong> {companies.find(c => c.id === form.company_id)?.name}</p>
+          <p><strong>Solicitante:</strong> {representatives.find(r => r.id === form.representative_id)?.name}</p>
           <p><strong>Área:</strong> {form.requesting_area}</p>
           <p><strong>Justificación:</strong> {form.justification}</p>
         </div>
@@ -198,10 +198,10 @@ if (showPreview) {
           <tbody>
             {details.map((d, i) => (
               <tr key={i}>
-                <td className="border px-2 py-1">{services.find(s => s.id == d.service_id)?.name}</td>
-                <td className="border px-2 py-1">{providers.find(p => p.id == d.provider_id)?.name}</td>
+                <td className="border px-2 py-1">{services.find(s => s.id === d.service_id)?.name}</td>
+                <td className="border px-2 py-1">{providers.find(p => p.id === d.provider_id)?.name}</td>
                 <td className="border px-2 py-1">{d.quantity}</td>
-                <td className="border px-2 py-1">{units.find(u => u.id == d.unit_id)?.name}</td>
+                <td className="border px-2 py-1">{units.find(u => u.id === d.unit_id)?.name}</td>
                 <td className="border px-2 py-1">{d.duration}</td>
                 <td className="border px-2 py-1">{d.price} PEN</td>
               </tr>
@@ -391,8 +391,8 @@ if (showPreview) {
               {details.map((d, i) => (
                 <div key={i} className="border p-2 rounded bg-white shadow-sm flex justify-between items-center">
                   <span>
-                    {services.find(s => s.id == d.service_id)?.name} × {d.quantity} (
-                    {units.find(u => u.id == d.unit_id)?.name} × {d.duration})
+                    {services.find(s => s.id === d.service_id)?.name} × {d.quantity} (
+                    {units.find(u => u.id === d.unit_id)?.name} × {d.duration})
                   </span>
                   <div className="flex items-center gap-2">
                     <span>{d.price} PEN</span>

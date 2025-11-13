@@ -82,6 +82,7 @@ const RegisterForm = () => {
       validateField(key, formData[key]);
       return fieldErrors[key];
     });
+
     if (hasErrors) {
       setGlobalError("Por favor corrige los errores en el formulario");
       return;
@@ -92,8 +93,8 @@ const RegisterForm = () => {
     try {
       const payload = { ...formData };
 
-      // Llamar API
-      const response = await axios.post(
+      // Llamar API (no guardamos la respuesta porque no se usa)
+      await axios.post(
         `${process.env.REACT_APP_API_URL}/api/register`,
         payload,
         {
@@ -338,11 +339,9 @@ const RegisterForm = () => {
           <div className="pt-2">
             <button
               type="submit"
-              disabled={isLoading || !recaptchaReady}
+              disabled={isLoading}
               className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#000AC7] hover:bg-[#3940CF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0E4D30] tracking-[0.10em] transition-colors ${
-                isLoading || !recaptchaReady
-                  ? "opacity-75 cursor-not-allowed"
-                  : ""
+                isLoading ? "opacity-75 cursor-not-allowed" : ""
               }`}
             >
               {isLoading ? (
