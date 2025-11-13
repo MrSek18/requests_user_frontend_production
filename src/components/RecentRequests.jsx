@@ -12,13 +12,11 @@ export default function RequerimientosRecientes({ token }) {
     const fetchRequerimientos = async () => {
       try {
         const res = await axios.get(
-          `${process.env.REACT_APP_API_URL}/requests/recent`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          `${process.env.REACT_APP_API_URL}/api/requests/recent`,
+          { headers: { Authorization: `Bearer ${token}` } }
         );
+
+
         setRequerimientos(res.data);
       } catch (err) {
         console.error("Error al cargar requerimientos:", err);
