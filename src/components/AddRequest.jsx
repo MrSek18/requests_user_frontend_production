@@ -389,13 +389,19 @@ if (showPreview) {
 
             <div className="space-y-2">
               {details.map((d, i) => (
-                <div key={i} className="border p-2 rounded bg-white shadow-sm flex justify-between items-center">
+                <div
+                  key={i}
+                  className="border p-2 rounded bg-white shadow-sm flex justify-between items-center"
+                >
                   <span>
-                    {services.find(s => s.id === d.service_id)?.name} × {d.quantity} (
-                    {units.find(u => u.id === d.unit_id)?.name} × {d.duration})
+                    {services.find((s) => s.id === d.service_id)?.name} × {d.quantity} (
+                    {units.find((u) => u.id === d.unit_id)?.name} × {d.duration})
                   </span>
-                  <div className="flex items-center gap-2">
-                    <span>{d.price} PEN</span>
+                  <div className="flex items-center gap-4">
+                    <span className="text-sm text-gray-600">
+                      {d.unit_price} PEN/u
+                    </span>
+                    <span className="font-semibold">{d.subtotal} PEN</span>
                     <button
                       onClick={() => handleRemoveDetail(i)}
                       className="text-red-500 hover:text-red-700 font-bold"
@@ -406,8 +412,8 @@ if (showPreview) {
                   </div>
                 </div>
               ))}
-
             </div>
+
 
                         {/* Total y botón */}
             <div className="flex items-center justify-between mt-6">
