@@ -115,8 +115,9 @@ export default function AddRequest({ user, onLogout }) {
   const handleRemoveDetail = (index) => {
     const removed = details[index];
     setDetails(details.filter((_, i) => i !== index));
-    setTotal((prev) => prev - removed.price);
+    setTotal((prev) => prev - removed.subtotal);
   };
+
 
   
 
