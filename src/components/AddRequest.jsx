@@ -94,13 +94,18 @@ export default function AddRequest({ user, onLogout }) {
 
     const newDetail = {
       provider_id: form.provider_id,
+      provider_name: providers.find(p => p.id === parseInt(form.provider_id))?.name,
       service_id: form.service_id,
+      service_name: services.find(s => s.id === parseInt(form.service_id))?.name,
       quantity: form.quantity,
       unit_id: form.unit_id,
+      unit_name: units.find(u => u.id === parseInt(form.unit_id))?.name,
       duration: form.duration,
       unit_price: unitPrice,
       subtotal: subtotal,
     };
+
+
 
     setDetails([...details, newDetail]);
     setTotal((prev) => prev + subtotal);
@@ -178,11 +183,18 @@ if (showPreview) {
         <h2 className="text-2xl font-bold text-center mb-4">Orden de Servicio</h2>
 
         <div className="space-y-2 text-sm">
-          <p><strong>Empresa:</strong> {companies.find(c => c.id === form.company_id)?.name}</p>
-          <p><strong>Solicitante:</strong> {representatives.find(r => r.id === form.representative_id)?.name}</p>
+          <p>
+            <strong>Empresa:</strong>{" "}
+            {companies.find(c => c.id === parseInt(form.company_id))?.name}
+          </p>
+          <p>
+            <strong>Solicitante:</strong>{" "}
+            {representatives.find(r => r.id === parseInt(form.representative_id))?.name}
+          </p>
           <p><strong>Área:</strong> {form.requesting_area}</p>
           <p><strong>Justificación:</strong> {form.justification}</p>
         </div>
+
 
         <table className="w-full text-sm border mt-4">
           <thead className="bg-gray-200">
@@ -198,12 +210,13 @@ if (showPreview) {
           <tbody>
             {details.map((d, i) => (
               <tr key={i}>
-                <td className="border px-2 py-1">{services.find(s => s.id === d.service_id)?.name}</td>
-                <td className="border px-2 py-1">{providers.find(p => p.id === d.provider_id)?.name}</td>
+                <td className="border px-2 py-1">{d.service_name}</td>
+                <td className="border px-2 py-1">{d.provider_name}</td>
                 <td className="border px-2 py-1">{d.quantity}</td>
-                <td className="border px-2 py-1">{units.find(u => u.id === d.unit_id)?.name}</td>
+                <td className="border px-2 py-1">{d.unit_name}</td>
                 <td className="border px-2 py-1">{d.duration}</td>
-                <td className="border px-2 py-1">{d.price} PEN</td>
+                <td className="border px-2 py-1">{d.unit_price} PEN</td>
+                <td className="border px-2 py-1">{d.subtotal} PEN</td>
               </tr>
             ))}
           </tbody>
