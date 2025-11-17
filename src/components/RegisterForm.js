@@ -164,8 +164,8 @@ const RegisterForm = () => {
               id="name"
               required
               className={`mt-1 block w-full px-3 py-2 border ${
-                fieldErrors.name ? "border-red-500" : "border-[#0F4C30]"
-              } rounded-xl shadow-sm focus:outline-none focus:ring-[#0E4D30] focus:border-[#0E4D30]`}
+                fieldErrors.name ? "border-red-500" : "border-[#000ac7]"
+              } rounded-xl shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
               value={formData.name}
               onChange={handleChange}
             />
@@ -190,8 +190,8 @@ const RegisterForm = () => {
                 required
                 maxLength={8}
                 className={`mt-1 block w-full px-3 py-2 border ${
-                  fieldErrors.dni ? "border-red-500" : "border-[#0F4C30]"
-                } rounded-xl shadow-sm focus:outline-none focus:ring-[#0E4D30] focus:border-[#0E4D30]`}
+                  fieldErrors.dni ? "border-red-500" : "border-[#000ac7]"
+                } rounded-xl shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
                 value={formData.dni}
                 onChange={handleChange}
               />
@@ -214,8 +214,8 @@ const RegisterForm = () => {
                 required
                 maxLength={9}
                 className={`mt-1 block w-full px-3 py-2 border ${
-                  fieldErrors.phone ? "border-red-500" : "border-[#0F4C30]"
-                } rounded-xl shadow-sm focus:outline-none focus:ring-[#0E4D30] focus:border-[#0E4D30]`}
+                  fieldErrors.phone ? "border-red-500" : "border-[#000ac7]"
+                } rounded-xl shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
                 value={formData.phone}
                 onChange={handleChange}
               />
@@ -239,8 +239,8 @@ const RegisterForm = () => {
               id="email"
               required
               className={`mt-1 block w-full px-3 py-2 border ${
-                fieldErrors.email ? "border-red-500" : "border-[#0F4C30]"
-              } rounded-xl shadow-sm focus:outline-none focus:ring-[#0E4D30] focus:border-[#0E4D30]`}
+                fieldErrors.email ? "border-red-500" : "border-[#000ac7]"
+              } rounded-xl shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
               value={formData.email}
               onChange={handleChange}
             />
@@ -264,8 +264,8 @@ const RegisterForm = () => {
                 id="password"
                 required
                 className={`mt-1 block w-full px-3 py-2 border ${
-                  fieldErrors.password ? "border-red-500" : "border-[#0F4C30]"
-                } rounded-xl shadow-sm focus:outline-none focus:ring-[#0E4D30] focus:border-[#0E4D30]`}
+                  fieldErrors.password ? "border-red-500" : "border-[#000ac7]"
+                } rounded-xl shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
                 value={formData.password}
                 onChange={handleChange}
               />
@@ -323,8 +323,8 @@ const RegisterForm = () => {
               className={`mt-1 block w-full px-3 py-2 border ${
                 fieldErrors.password_confirmation
                   ? "border-red-500"
-                  : "border-[#0F4C30]"
-              } rounded-xl shadow-sm focus:outline-none focus:ring-[#0E4D30] focus:border-[#0E4D30]`}
+                  : "border-[#000ac7]"
+              } rounded-xl shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
               value={formData.password_confirmation}
               onChange={handleChange}
             />
