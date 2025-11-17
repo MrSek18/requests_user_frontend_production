@@ -25,3 +25,7 @@ dist/
 *.exe
 *.app
 *.dmg
+/dist
+*.exe
+*.app
+*.dmg
