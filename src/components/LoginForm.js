@@ -24,6 +24,8 @@ function LoginForm({ onLogin }) {
     setIsLoading(true);
 
     try {
+      await axios.get(`${process.env.REACT_APP_API_URL}/health`)
+      await new Promise(resolve => setTimeout(resolve, 10000));
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/login`,
         {
