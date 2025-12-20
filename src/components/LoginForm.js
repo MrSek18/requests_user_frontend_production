@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { warmUpDatabase} from "../utils/warmUp";
+
 
 function LoginForm({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -25,13 +27,7 @@ function LoginForm({ onLogin }) {
 
     try {
 
-      try{
-        await axios.get(`${process.env.REACT_APP_API_URL}/api/health`);
-      } catch (warmErr) {
-        console.warn("Warm-up falló, esperando...");
-      }
-
-      await new Promise(resolve => setTimeout(resolve, 10000));
+      await warmUpDatabase();
       
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/login`,
