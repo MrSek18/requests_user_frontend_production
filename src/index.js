@@ -10,17 +10,7 @@ axios.defaults.baseURL =
   "https://requests-user-backend-production.onrender.com/api";
 axios.defaults.headers.common["Accept"] = "application/json";
 
-axios.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem("auth");
-      window.location.href = "/login";
-    }
-    return Promise.reject(error);
-  }
-);
-// Interceptor para manejar la autenticación
+// Interceptor para manejar la autenticación en cada request
 axios.interceptors.request.use((config) => {
   const authData = JSON.parse(localStorage.getItem("auth"));
   if (authData?.token) {
@@ -29,17 +19,6 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-// Interceptor para manejar errores
-axios.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem("auth");
-      window.location.href = "/login";
-    }
-    return Promise.reject(error);
-  }
-);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
