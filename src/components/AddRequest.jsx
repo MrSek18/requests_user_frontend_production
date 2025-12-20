@@ -1,6 +1,10 @@
 import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
+import { warmUpDatabase } from "../utils/warmUp";
+
+
+
 export default function AddRequest({ user, onLogout }) {
   const navigate = useNavigate();
 
@@ -32,6 +36,7 @@ export default function AddRequest({ user, onLogout }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        await warmUpDatabase();
         const [comp, reps, prov, serv, unit] = await Promise.all([
           api.get("api/companies"),
           api.get("api/representatives"),
@@ -123,6 +128,7 @@ export default function AddRequest({ user, onLogout }) {
 
   const handleSubmit = async () => {
     try {
+      await warmUpDatabase();
       const payload = {
         ...form,
         details,
@@ -141,7 +147,7 @@ export default function AddRequest({ user, onLogout }) {
   const confirmarEnvio = async () => {
     setShowModal(false);
     try {
-      const data = await handleSubmit(); // 👈 aquí obtienes el ID de la solicitud
+      const data = await handleSubmit(); // ID de la solicitud
       setSuccessMessage(true);
 
       // Descargar PDF automáticamente
