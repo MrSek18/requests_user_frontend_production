@@ -10,7 +10,7 @@ import { warmUpDatabase } from "./utils/warmUp";
 
 // Configuración global de Axios
 axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}/api`;
-axios.defaults.withCredentials = true; // ✅ Importante para cookies con Sanctum
+axios.defaults.withCredentials = true; 
 
 function App() {
   const [user, setUser] = useState(null);
@@ -40,23 +40,15 @@ function App() {
       }
 
       try {
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${authData.token}`;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${authData.token}`;
         await warmUpDatabase();
         const response = await axios.get("/user");
         setUser(response.data.user || authData.user);
       } catch (error) {
-        if(error.response?.status === 401){
-          if (authData?.user){
+        if(error.response?.status === 401 && authData?.user){
             handleLogout();
-          } else{
-            localStorage.removeItem("auth");
-            delete axios.defaults.headers.common["Authorization"];
-            setUser(null);
-          }
-        } else{
-          console.error("Error en verifyAuth: ", error.response?.data || error.message);
+        } else {
+          console.error("Error en verifyAuth: ", error.response?.data || error.message)
         }
       } finally {
         setLoading(false);
