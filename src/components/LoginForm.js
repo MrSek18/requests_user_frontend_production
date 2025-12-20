@@ -29,10 +29,7 @@ function LoginForm({ onLogin }) {
 
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/login`,
-        {
-          email,
-          password,
-        },
+        { email, password },
         {
           headers: {
             "Content-Type": "application/json",
@@ -42,12 +39,10 @@ function LoginForm({ onLogin }) {
         }
       );
 
-      // Verificación más robusta de la respuesta
       if (!response.data) {
         throw new Error("El servidor no devolvió datos");
       }
 
-      // Manejo flexible de diferentes estructuras de respuesta
       const token = response.data.token || response.data.access_token;
       const user = response.data.user || response.data.data;
 
@@ -55,16 +50,13 @@ function LoginForm({ onLogin }) {
         throw new Error("No se recibió token de autenticación");
       }
 
-      // Guardar datos de autenticación
-      const authData = {
-        user: user || { email }, // Si no viene user, crea uno mínimo
-        token: token,
-      };
+      // Guardar datos SOLO si el login fue exitoso
+      const authData = { user, token };
       localStorage.setItem("access_token", token);
       localStorage.setItem("auth", JSON.stringify(authData));
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      onLogin(authData.user, token);
+      onLogin(user, token);
       navigate("/dashboard");
     } catch (err) {
       let errorMessage = "Error en el inicio de sesión";
@@ -77,9 +69,9 @@ function LoginForm({ onLogin }) {
           `Error ${err.response.status}`;
 
         if (err.response.status === 401) {
-          // Solo mostrar mensaje, no limpiar ni redirigir
+          // Solo mostrar mensaje, no guardar nada en localStorage
           setError(errorMessage);
-          return; // corta el flujo aquí
+          return;
         }
       } else if (err.request) {
         errorMessage = "El servidor no respondió";
@@ -89,15 +81,12 @@ function LoginForm({ onLogin }) {
 
       setError(errorMessage);
 
-      // Limpieza solo en errores distintos a credenciales inválidas
+      // Limpieza en errores graves
       localStorage.removeItem("auth");
       delete axios.defaults.headers.common["Authorization"];
 
       console.error("Error en login:", err);
-    }
-
-    
-    finally {
+    } finally {
       setIsLoading(false);
     }
   };
