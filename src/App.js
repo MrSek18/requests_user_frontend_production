@@ -47,14 +47,13 @@ function App() {
     } catch (error) {
       if (error.response?.status === 401) {
         if (authData?.user) {
-          // 👇 Caso: token expirado → cerrar sesión
-          handleLogout();
+          // Caso: token expirado: cerrar sesión
+          return;
         } else {
-          // 👇 Caso: intento de login fallido → limpiar sin redirigir
+
           localStorage.removeItem("auth");
           delete axios.defaults.headers.common["Authorization"];
           setUser(null);
-          // aquí NO llamamos a handleLogout para que no reinicie
         }
       } else {
         console.error("Error en verifyAuth:", error.response?.data || error.message);

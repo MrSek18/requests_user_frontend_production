@@ -77,7 +77,7 @@ function LoginForm({ onLogin }) {
           `Error ${err.response.status}`;
 
         if (err.response.status === 401) {
-          // 👇 Solo mostrar mensaje, no limpiar ni redirigir
+          // Solo mostrar mensaje, no limpiar ni redirigir
           setError(errorMessage);
           return; // corta el flujo aquí
         }
