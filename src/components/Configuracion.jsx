@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api"; // <-- usa tu instancia de Axios con baseURL
+import { warmUpDatabase } from "../utils/warmUp";
 
 export default function Configuracion({ user, onLogout }) {
   const navigate = useNavigate();
@@ -47,9 +48,15 @@ export default function Configuracion({ user, onLogout }) {
     if (!token) {
       throw new Error("Token no disponible. Por favor inicia sesión de nuevo.");
     }
-
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    
+
+    await warmUpDatabase()
+
+    const response = await api.put(`/api/user/${user.id}`, {
+      [field]: formData[field],
+    });
+
+    console.log("Respuesta del backend", response.data)
 
     setStatusMessage((prev) => ({
       ...prev,

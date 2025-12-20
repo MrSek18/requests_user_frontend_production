@@ -121,58 +121,58 @@ export default function AddRequest({ user, onLogout }) {
 
   
 
-const handleSubmit = async () => {
-  try {
-    const payload = {
-      ...form,
-      details,
-      total,
-    };
-    const response = await api.post("/api/add_request", payload);
-    return response.data; // 👈 devuelve el objeto con el ID
-  } catch (error) {
-    console.error("Error al enviar solicitud:", error.response?.data);
-    alert("La solicitud no pudo enviarse. Revisa los campos o contacta al admin.");
-    setShowPreview(false);
-    throw error;
-  }
-};
+  const handleSubmit = async () => {
+    try {
+      const payload = {
+        ...form,
+        details,
+        total,
+      };
+      const response = await api.post("/api/add_request", payload);
+      return response.data; // 👈 devuelve el objeto con el ID
+    } catch (error) {
+      console.error("Error al enviar solicitud:", error.response?.data);
+      alert("La solicitud no pudo enviarse. Revisa los campos o contacta al admin.");
+      setShowPreview(false);
+      throw error;
+    }
+  };
 
-const confirmarEnvio = async () => {
-  setShowModal(false);
-  try {
-    const data = await handleSubmit(); // 👈 aquí obtienes el ID de la solicitud
-    setSuccessMessage(true);
+  const confirmarEnvio = async () => {
+    setShowModal(false);
+    try {
+      const data = await handleSubmit(); // 👈 aquí obtienes el ID de la solicitud
+      setSuccessMessage(true);
 
-    // Descargar PDF automáticamente
-    const token = localStorage.getItem("access_token");
-    console.log("Token:", token);
-    const requestId = data.request_id; // asegúrate que tu backend lo devuelva
+      // Descargar PDF automáticamente
+      const token = localStorage.getItem("access_token");
+      console.log("Token:", token);
+      const requestId = data.request_id; // asegúrate que tu backend lo devuelva
 
-    const response = await api.get(`/api/requests/${requestId}/orden-servicio/pdf`, {
-      responseType: "blob",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+      const response = await api.get(`/api/requests/${requestId}/orden-servicio/pdf`, {
+        responseType: "blob",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", `orden_servicio_${requestId}.pdf`);
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `orden_servicio_${requestId}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
 
-    // Redirigir después de un tiempo
-    setTimeout(() => {
-      setSuccessMessage(false);
-      navigate("/dashboard");
-    }, 2000);
-  } catch (error) {
-    console.error("Error en confirmarEnvio:", error);
-  }
-};
+      // Redirigir después de un tiempo
+      setTimeout(() => {
+        setSuccessMessage(false);
+        navigate("/dashboard");
+      }, 2000);
+    } catch (error) {
+      console.error("Error en confirmarEnvio:", error);
+    }
+  };
 
 
 

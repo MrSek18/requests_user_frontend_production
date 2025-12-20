@@ -11,4 +11,3 @@ if (authData?.token) {
 }
 
 export default api;
-

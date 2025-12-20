@@ -6,6 +6,7 @@ import Dashboard from "./components/Dashboard";
 import RegisterForm from "./components/RegisterForm";
 import Configuracion from "./components/Configuracion";
 import AddRequest from "./components/AddRequest";
+import { warmUpDatabase } from "./utils/warmUp";
 
 // Configuración global de Axios
 axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}/api`;
@@ -42,6 +43,7 @@ function App() {
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${authData.token}`;
+        await warmUpDatabase();
         const response = await axios.get("/user");
         setUser(response.data.user || authData.user);
       } catch (error) {

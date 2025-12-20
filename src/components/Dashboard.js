@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 
 import api from "../api";
 import RequerimientosRecientes from "./RecentRequests";
+import { warmUpDatabase } from "../utils/warmUp";
 
 const Dashboard = ({ user, onLogout }) => {
   const [userData, setUserData] = useState(null);
@@ -22,7 +23,7 @@ const Dashboard = ({ user, onLogout }) => {
         if (!token) {
           throw new Error("No hay token disponible");
         }
-
+        await warmUpDatabase();
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         const response = await api.get("/api/user", {
           withCredentials: true,
@@ -62,9 +63,9 @@ const Dashboard = ({ user, onLogout }) => {
       try {
         const authData = JSON.parse(localStorage.getItem("auth"));
         const token = authData?.token;
-
         if (!token) throw new Error("No hay token disponible");
 
+        await warmUpDatabase();
         const res = await api.get("/api/requests/recent", {
           headers: {
             Authorization: `Bearer ${token}`,
