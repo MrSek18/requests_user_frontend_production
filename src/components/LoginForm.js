@@ -77,6 +77,11 @@ function LoginForm({ onLogin }) {
           err.response.data?.error ||
           err.response.statusText ||
           `Error ${err.response.status}`;
+
+        if (err.response.status === 401) {
+          setError(errorMessage);
+          return;
+        }
       } else if (err.request) {
         // La petición fue hecha pero no hubo respuesta
         errorMessage = "El servidor no respondió";
