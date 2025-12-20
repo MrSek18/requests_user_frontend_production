@@ -67,11 +67,9 @@ function LoginForm({ onLogin }) {
       onLogin(authData.user, token);
       navigate("/dashboard");
     } catch (err) {
-      // Manejo mejorado de errores
       let errorMessage = "Error en el inicio de sesión";
 
       if (err.response) {
-        // Error del servidor (4xx, 5xx)
         errorMessage =
           err.response.data?.message ||
           err.response.data?.error ||
@@ -79,25 +77,27 @@ function LoginForm({ onLogin }) {
           `Error ${err.response.status}`;
 
         if (err.response.status === 401) {
+          // 👇 Solo mostrar mensaje, no limpiar ni redirigir
           setError(errorMessage);
-          return;
+          return; // corta el flujo aquí
         }
       } else if (err.request) {
-        // La petición fue hecha pero no hubo respuesta
         errorMessage = "El servidor no respondió";
       } else {
-        // Error al configurar la petición
         errorMessage = err.message;
       }
 
       setError(errorMessage);
 
-      // Limpieza de credenciales inválidas
+      // Limpieza solo en errores distintos a credenciales inválidas
       localStorage.removeItem("auth");
       delete axios.defaults.headers.common["Authorization"];
 
       console.error("Error en login:", err);
-    } finally {
+    }
+
+    
+    finally {
       setIsLoading(false);
     }
   };

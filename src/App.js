@@ -31,32 +31,42 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const verifyAuth = async () => {
-      const authData = JSON.parse(localStorage.getItem("auth"));
+  const verifyAuth = async () => {
+    const authData = JSON.parse(localStorage.getItem("auth"));
 
-      if (!authData?.token) {
-        setLoading(false);
-        return;
-      }
+    if (!authData?.token) {
+      setLoading(false);
+      return;
+    }
 
-      try {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${authData.token}`;
-        await warmUpDatabase();
-        const response = await axios.get("/user");
-        setUser(response.data.user || authData.user);
-      } catch (error) {
-        if(error.response?.status === 401 && authData?.user){
-            handleLogout();
+    try {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${authData.token}`;
+      await warmUpDatabase();
+      const response = await axios.get("/user");
+      setUser(response.data.user || authData.user);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        if (authData?.user) {
+          // 👇 Caso: token expirado → cerrar sesión
+          handleLogout();
         } else {
-          console.error("Error en verifyAuth: ", error.response?.data || error.message)
+          // 👇 Caso: intento de login fallido → limpiar sin redirigir
+          localStorage.removeItem("auth");
+          delete axios.defaults.headers.common["Authorization"];
+          setUser(null);
+          // aquí NO llamamos a handleLogout para que no reinicie
         }
-      } finally {
-        setLoading(false);
+      } else {
+        console.error("Error en verifyAuth:", error.response?.data || error.message);
       }
-    };
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    verifyAuth();
-  }, [handleLogout]);
+  verifyAuth();
+}, [handleLogout]);
+
 
   const PrivateRoute = ({ children }) => {
     if (loading) {
