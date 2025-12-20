@@ -44,13 +44,14 @@ function App() {
       await warmUpDatabase();
       const response = await axios.get("/user");
       setUser(response.data.user || authData.user);
-    } catch (error) {
+    }
+    catch (error) {
       if (error.response?.status === 401) {
-        if (authData?.user) {
-          // Caso: token expirado: cerrar sesión
-          return;
+        if (authData?.token) {
+          // Token expirado → cerrar sesión
+          handleLogout();
         } else {
-
+          // No había token válido → limpiar sin redirigir
           localStorage.removeItem("auth");
           delete axios.defaults.headers.common["Authorization"];
           setUser(null);
@@ -58,7 +59,10 @@ function App() {
       } else {
         console.error("Error en verifyAuth:", error.response?.data || error.message);
       }
-    } finally {
+    }
+
+    
+    finally {
       setLoading(false);
     }
   };
