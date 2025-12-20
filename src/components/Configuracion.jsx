@@ -4,6 +4,7 @@ import api from "../api"; // <-- usa tu instancia de Axios con baseURL
 import { warmUpDatabase } from "../utils/warmUp";
 
 export default function Configuracion({ user, onLogout }) {
+
   const navigate = useNavigate();
   const [statusMessage, setStatusMessage] = useState({});
   const [formData, setFormData] = useState({

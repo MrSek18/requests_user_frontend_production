@@ -47,8 +47,10 @@ function App() {
         const response = await axios.get("/user");
         setUser(response.data.user || authData.user);
       } catch (error) {
-        if (error.response?.status === 401) {
+        if (error.response?.status === 401 && authData?.user) {
           handleLogout();
+        } else {
+          console.error("Error en verifyAuth: ", error.response?.data || error.message);
         }
       } finally {
         setLoading(false);
