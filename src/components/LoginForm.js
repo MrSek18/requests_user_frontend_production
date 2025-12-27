@@ -9,6 +9,7 @@ function LoginForm({ onLogin }) {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const [showCredenciales, setShowCredenciales] = useState(false);
 
   useEffect(() => {
     const authData = JSON.parse(localStorage.getItem("auth"));
@@ -162,49 +163,94 @@ function LoginForm({ onLogin }) {
               />
             </div>
           </div>
-          <div className="flex items-center justify-between gap-4">
-            <button
-              type="submit"
-              disabled={isLoading}
-              className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#000AC7] hover:bg-[#3940CF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#000AC7] tracking-[0.10em] ${
-                isLoading ? "opacity-75 cursor-not-allowed" : ""
-              }`}
-            >
-              {isLoading ? (
-                <>
-                  <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  Validando...
-                </>
-              ) : (
-                "Ingresar"
-              )}
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate("/register")}
-              className="flex-1 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-[#000AC7] bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#000AC7] tracking-[0.10em]"
-            >
-              Registrar
-            </button>
+          <div className="h-full w-full flex flex-col gap-2">
+            
+            <div className="flex w-full gap-2">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#000AC7] hover:bg-[#3940CF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#000AC7] tracking-[0.10em] ${
+                  isLoading ? "opacity-75 cursor-not-allowed" : ""
+                }`}
+              >
+                {isLoading ? (
+                  <>
+                    <svg
+                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    Validando...
+                  </>
+                ) : (
+                  "Ingresar"
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate("/register")}
+                className="flex-1 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-[#000AC7] bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#000AC7] tracking-[0.10em]"
+              >
+                Registrar
+              </button>
+            </div>
+            {/* Fila con dos botones mitad y mitad */}
+            <div className="flex gap-4 w-full">
+              <div className="w-1/2 flex flex-col items-center gap-2 ">
+                <button
+                  type="button"
+                  onClick={() => setShowCredenciales(true)}
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 tracking-[0.10em]"
+                >
+                  Ver credenciales
+                </button>
+
+                {showCredenciales && (
+                  <div className="absolute top-0 left-0 w-full bg-white text-gray-800 p-4 rounded shadow-lg z-50">
+                    {/* Botón de cierre */}
+                    <button
+                      onClick={() => setShowCredenciales(false)}
+                      className="absolute top-2 right-2 text-gray-600 hover:text-black font-bold"
+                    >
+                      ✕
+                    </button>
+
+                    {/* Contenido */}
+                    <p className="text-sm font-mono mb-2">
+                      <strong>Correo:</strong> Antonio1093@gmail.com 
+                    </p>
+                    <p className="text-sm font-mono">
+                      <strong>Contraseña:</strong> @239090smF02N
+                    </p>
+                  </div>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  (window.location.href =
+                    "https://requests-admin-frontend-production.vercel.app/")
+                }
+                className="w-1/2 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 tracking-[0.10em]"
+              >
+                Panel de Admins
+              </button>
+            </div>
           </div>
         </form>
       </div>

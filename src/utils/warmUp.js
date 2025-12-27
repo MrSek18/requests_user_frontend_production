@@ -1,4 +1,4 @@
-// src/utils/warmUp.js
+
 import axios from "axios";
 
 export const warmUpDatabase = async () => {
